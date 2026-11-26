@@ -1,0 +1,43 @@
+name: Frontend CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate frontend
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install locked development tools
+        run: npm ci
+
+      - name: Check syntax, framework/library versions, HTML, CSS, and tests
+        run: npm run check
+
+      - name: Audit npm dependencies
+        run: npm audit --audit-level=high
+
+      - name: Package static frontend
+        run: tar -czf frontendClase16Nov.tar.gz index.html script.js style.css
+
+      - name: Upload frontend artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontendClase16Nov-static-site
+          path: frontendClase16Nov.tar.gz
+          if-no-files-found: error
+          retention-days: 7

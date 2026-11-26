@@ -1,0 +1,22 @@
+{
+  "name": "frontend-clase16nov",
+  "version": "1.0.0",
+  "private": true,
+  "engines": {
+    "node": "24.x"
+  },
+  "scripts": {
+    "check": "npm run check:syntax && npm run lint && npm run validate:html && npm run validate:css && npm test",
+    "check:syntax": "node --check script.js",
+    "lint": "eslint script.js",
+    "validate:html": "html-validate index.html",
+    "validate:css": "stylelint style.css",
+    "test": "node --test"
+  },
+  "devDependencies": {
+    "eslint": "10.15.0",
+    "globals": "17.14.0",
+    "html-validate": "11.23.0",
+    "stylelint": "18.1.0"
+  }
+}
